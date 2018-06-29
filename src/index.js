@@ -39,7 +39,12 @@ async function begin () {
     ])
   })
   const file = xlsx.build(xlsData)
-  fs.writeFileSync(path.resolve(__dirname, `../output/${moment().format('YYYY-MM-DD HH-mm')}.xlsx`), file, 'binary')
+  const outputPath = path.resolve(__dirname, '../output')
+  const isExist = fs.existsSync(outputPath)
+  if (!isExist) {
+    fs.mkdirSync(outputPath)
+  }
+  fs.writeFileSync(path.resolve(outputPath, `${moment().format('YYYY-MM-DD HH-mm')}.xlsx`), file, 'binary')
 }
 
 begin()
